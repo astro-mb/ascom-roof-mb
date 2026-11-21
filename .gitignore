@@ -1,0 +1,44 @@
+# --- .NET / MSBuild ---
+bin/
+obj/
+artifacts/
+*.user
+*.suo
+*.userprefs
+*.cache
+*.dll
+*.pdb
+*.exe
+.vs/
+
+# --- NuGet ---
+packages/
+*.nupkg
+*.snupkg
+
+# --- Arduino / arduino-cli ---
+build/
+*.hex
+*.elf
+*.eep
+*.bin
+
+# --- Logs & sorties ---
+*.log
+logs/
+# Journaux de nuit recopies depuis le PC de l'observatoire pour diagnostic : personnels.
+traces/
+
+# --- Systeme ---
+Thumbs.db
+desktop.ini
+.DS_Store
+
+# --- Paquet de deploiement ---
+# release/ est le SEUL endroit ou des binaires sont versionnes, volontairement :
+# le PC de l'observatoire n'a ni SDK .NET ni IDE Arduino, un simple `git pull`
+# doit donc lui apporter la DLL et le .hex deja compiles, coherents avec les
+# sources du meme commit. Ces binaires sont regeneres par tools/package.ps1.
+!release/
+!release/*.dll
+!release/*.hex

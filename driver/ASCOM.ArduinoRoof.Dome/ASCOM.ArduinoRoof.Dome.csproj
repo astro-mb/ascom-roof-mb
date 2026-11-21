@@ -1,0 +1,67 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!-- ================================================================
+       Driver ASCOM Dome — Toit coulissant Arduino (Roll-Off Roof)
+       DLL COM in-process, .NET Framework 4.8, enregistrée par regasm /codebase.
+       ================================================================ -->
+
+  <PropertyGroup>
+    <TargetFramework>net48</TargetFramework>
+    <OutputType>Library</OutputType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <UseWindowsForms>true</UseWindowsForms>
+
+    <!-- L'hôte COM du SDK (.comhost.dll) ne concerne que .NET Core / .NET 5+.
+         Ici l'enregistrement est fait par regasm /codebase. -->
+    <EnableComHosting>false</EnableComHosting>
+    <RegisterForComInterop>false</RegisterForComInterop>
+
+    <AssemblyName>ASCOM.ArduinoRoof.Dome</AssemblyName>
+    <RootNamespace>ASCOM.ArduinoRoof</RootNamespace>
+
+    <!-- AssemblyInfo.cs est écrit à la main (Properties/AssemblyInfo.cs) :
+         il porte notamment [assembly: ComVisible(false)]. -->
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <ComVisible>false</ComVisible>
+
+    <!-- Pas de Visual Studio ici : C# 7.3 (défaut de net48), aucune dépendance
+         à un langage plus récent, pour rester compilable partout. -->
+    <LangVersion>7.3</LangVersion>
+    <Deterministic>true</Deterministic>
+    <GenerateDocumentationFile>false</GenerateDocumentationFile>
+    <SatelliteResourceLanguages>en</SatelliteResourceLanguages>
+    <AutoGenerateBindingRedirects>false</AutoGenerateBindingRedirects>
+    <CopyLocalLockFileAssemblies>false</CopyLocalLockFileAssemblies>
+    <NeutralLanguage>fr-FR</NeutralLanguage>
+  </PropertyGroup>
+
+  <!-- Le pack de ciblage .NET Framework 4.8 n'est pas installé sur la machine :
+       ce paquet fournit les assemblies de référence. PrivateAssets=all → non transitif. -->
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.3" PrivateAssets="all" />
+  </ItemGroup>
+
+  <!-- Emplacement des composants développeur de la Plateforme ASCOM.
+       Surchargeable en ligne de commande : dotnet build -p:AscomComponents=... -->
+  <PropertyGroup>
+    <AscomComponents Condition="'$(AscomComponents)' == ''">$(MSBuildProgramFiles32)\ASCOM\Developer\Components\Platform</AscomComponents>
+  </PropertyGroup>
+
+  <!-- Les 3 assemblies ASCOM sont dans le GAC : Private=false (pas de copie locale),
+       la résolution se fait au runtime depuis le GAC. -->
+  <ItemGroup>
+    <Reference Include="ASCOM.DeviceInterfaces">
+      <HintPath>$(AscomComponents)\ASCOM.DeviceInterfaces.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="ASCOM.Utilities">
+      <HintPath>$(AscomComponents)\ASCOM.Utilities.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="ASCOM.Exceptions">
+      <HintPath>$(AscomComponents)\ASCOM.Exceptions.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,24 @@
+# Normalisation des fins de ligne : LF dans le depot, adapte au checkout.
+* text=auto eol=lf
+
+# Fichiers Windows qui doivent rester en CRLF sur le disque
+*.ps1   text eol=crlf
+*.bat   text eol=crlf
+*.cmd   text eol=crlf
+*.sln   text eol=crlf
+*.csproj text eol=crlf
+
+# Binaires.
+# Explicite et non laisse a l'auto-detection de `text=auto` : le paquet release/ contient une DLL
+# livree telle quelle sur le PC de l'observatoire, une conversion de fins de ligne la rendrait
+# inutilisable. L'heuristique de git protege deja ces fichiers, mais elle reste une heuristique.
+*.dll   binary
+*.exe   binary
+*.pdb   binary
+*.hex   binary
+*.elf   binary
+*.eep   binary
+*.bin   binary
+*.png   binary
+*.jpg   binary
+*.ico   binary
